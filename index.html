@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+
+		@font-face{
+			font-family: main;
+			src: url(2.ttf);
+		}
+
+		.box{
+			
+			height: 130px;
+			width: 110px;
+			background-size: 100% 100%;
+			position: absolute;
+			transition: 1.5s;
+		}
+
+
+		.p{
+			font-size: 30px;
+			margin-left: 50px;
+			margin-top: 0px;
+			display: none;
+			color: green;
+		}
+
+		.p1{
+			font-size: 30px;
+			margin-left: 50px;
+			margin-top: -10px;
+			display: none;
+			color: green;
+		}
+
+
+		.btn {
+			height: 80px;
+			width: 150px;
+			margin-top: 350px;
+			font-family: main;
+			
+			font-size: 25px;
+			border-radius: 30px;
+			border: 6px solid green;
+			box-shadow: 0 0 2px;
+
+		}
+
+		.b{
+			padding: 0;
+			margin: 0;
+		}
+
+		.gif{
+			display: none;
+			 background-size: cover;
+			 background-image: url(win.gif);
+			 margin-left: auto;
+			 margin-right: auto;
+			 height: 600px;
+			 width: 600px;
+			 margin-top: 50px;
+		}
+
+		.gif1{
+			display: none;
+			 background-size: cover;
+			 background-image: url(win.gif);
+			 margin-left: auto;
+			 margin-right: auto;
+			 height: 600px;
+			 width: 600px;
+			 margin-top: 50px;
+		}
+
+
+
+		
+	</style>
+</head>
+<body class="b" style="background-image: url(b1.jpg); background-size: cover; font-family: main;">
+	<div class="auto" style="margin-left: auto;
+			margin-right: auto; background: none; width: 150px;">
+	<button class="btn">Start Game</button>
+	
+	</div>
+
+	<div class="gif"></div>
+	<div class="gif1"></div>
+	<div style="display: flex;">
+	<p class="p">Очки: <span class="counter">0</span></p>
+	<p style="margin-left: 70px; font-size: 26px; color: green; margin-top: 0px; display: none;" class="p2">Эрик = -2, Кайл и Стэнли = 1, Кенни = 2</p>
+	
+	</div>
+	<p class="p1">Набери 30 очков за 15 секунд</p>
+	
+
+
+
+<script type="text/javascript">
+
+	let btn = document.querySelector(".btn");
+	let int1;
+	btn.onclick = function(){
+		int1 = setInterval(create, 500);
+		setTimeout(finish, 15000);
+		
+
+	}
+	function getRandom(num){
+		let rand = Math.random() * num; 
+		let round = Math.round(rand); 
+		return round;
+	}
+
+	function finish(){
+		
+		clearInterval(int1);
+		document.querySelector(".b").style.display = "none";
+
+		if (score < 30) {
+			alert("you lose (((");
+			
+			document.querySelector(".gif1").style.display = "block";
+		}
+
+	}
+
+	
+
+
+
+	let y = [150, 350, 550];
+	let images = ["stan.png", "kenny.png", "cartman.png", "kyle.png"];
+	let score = 0;
+
+	function create(){
+		document.querySelector(".auto").style.display = "none";
+		document.querySelector(".b").style.backgroundImage = "url(b2.webp)";
+		btn.style.display = "none";
+		let elem = document.createElement('div');
+		document.body.appendChild(elem);
+		document.querySelector(".p").style.display = "block";
+		document.querySelector(".p1").style.display = "block";
+		document.querySelector(".p2").style.display = "block";
+		elem.classList.add("box");
+		elem.style.left = getRandom(1350) + "px";
+		elem.style.top = y[getRandom(2)] + "px";
+		let randomImg = getRandom(3);
+		elem.style.backgroundImage = "url(" + images[randomImg] + ")";
+
+		if (randomImg == 0) {
+			elem.type = "norm";
+		}else if (randomImg == 1) {
+			elem.type = "good";
+		}else if (randomImg == 2) {
+			elem.type = "bad";
+		}else if (randomImg == 3) {
+			elem.type = "norm";
+		}
+
+		setTimeout(hidden, 2500);
+		
+		function hidden(){
+		elem.style.opacity = "0";
+		elem.style.transition = "1.5s";
+		}
+		
+		
+
+		elem.onclick = function(){
+			elem.style.display = "none";
+			if (elem.type == "norm") {
+				score = score + 1;
+			}else if (elem.type == "good") {
+				score = score + 2;
+			}else if (elem.type == "bad") {
+				score = score - 2;
+			}
+
+			if (score >= 30) {
+				alert("you win!! congrats1!!!");
+				document.querySelector(".b").style.display = "none";
+				document.querySelector(".gif").style.display = "block";
+			}
+
+			document.querySelector(".counter").innerHTML = score;
+		}
+
+	}
+
+	
+
+
+</script>
+</body>
+</html>
